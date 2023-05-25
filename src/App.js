@@ -58,7 +58,7 @@ const audioClips = [
   }
 ];
 
-function Pad({ clip, volume }) {
+function Pad({ clip, volume, setRecording }) {
   const [active, setActive] = useState(false);
 
   const playSound = () => {
@@ -66,6 +66,8 @@ function Pad({ clip, volume }) {
     audioTag.volume = volume;
     audioTag.currentTime = 0;
     audioTag.play();
+
+    setRecording(clip.id);
 
     setActive(true);
     setTimeout(() => setActive(false), 200);
@@ -95,18 +97,21 @@ function Pad({ clip, volume }) {
 
 function App() {
   const [volume, setVolume] = useState(0.3);
+  const [recording, setRecording] = useState('');
 
   return (
     <div className="App">
       <div className='container'>
         <div className='pad'>
           {audioClips.map((clip) => (
-            <Pad key={clip.id} clip={clip} volume={volume} />
+            <Pad key={clip.id} clip={clip} volume={volume} setRecording={setRecording} />
           ))}
         </div>
 
         <div className='display'>
           <input type='range' step='0.01' value={volume} max='1' min='0' onChange={(e) => setVolume(e.target.value)} />
+
+          <div>{recording}</div>
         </div>
       </div>
     </div>
