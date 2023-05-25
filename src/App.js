@@ -88,7 +88,7 @@ function Pad({ clip, volume, setRecording }) {
   }, []);
 
   return (
-    <button onClick={playSound} className={`${active && 'test'}`}>
+    <button onClick={playSound} className={`drum-pad ${active && 'test'}`}>
       <audio className='clip' id={clip.keyTrigger} src={clip.url} />
       {clip.keyTrigger}
     </button>
@@ -101,14 +101,14 @@ function App() {
 
   return (
     <div className="App">
-      <div className='container'>
+      <div id='drum-machine'>
         <div className='pad'>
           {audioClips.map((clip) => (
             <Pad key={clip.id} clip={clip} volume={volume} setRecording={setRecording} />
           ))}
         </div>
 
-        <div className='display'>
+        <div id='display'>
           <input type='range' step='0.01' value={volume} max='1' min='0' onChange={(e) => setVolume(e.target.value)} />
 
           <div>{recording}</div>
