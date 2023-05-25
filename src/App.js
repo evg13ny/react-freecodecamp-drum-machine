@@ -65,7 +65,9 @@ function Pad({ clip, volume, setRecording }) {
     const audioTag = document.getElementById(clip.keyTrigger);
     audioTag.volume = volume;
     audioTag.currentTime = 0;
-    audioTag.play();
+
+    var playPromise = audioTag.play();
+    if (playPromise !== undefined) playPromise.catch(function () { });
 
     setRecording(clip.id);
 
@@ -88,7 +90,7 @@ function Pad({ clip, volume, setRecording }) {
   }, []);
 
   return (
-    <button onClick={playSound} className={`drum-pad ${active && 'test'}`}>
+    <button onClick={playSound} className={`drum-pad ${active && 'test'}`} id={clip.id}>
       <audio className='clip' id={clip.keyTrigger} src={clip.url} />
       {clip.keyTrigger}
     </button>
